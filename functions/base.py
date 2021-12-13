@@ -39,10 +39,10 @@ class CheckpointRunner(object):
         self.summary_writer = summary_writer
 
         # initialize dataset
-        if dataset is None:
-            dataset = options.dataset  # useful during training
-        self.dataset = self.load_dataset(dataset, training)
-        self.dataset_collate_fn = self.load_collate_fn(dataset, training)
+        # if dataset is None:
+        #     dataset = options.dataset  # useful during training
+        # self.dataset = self.load_dataset(dataset, training)
+        # self.dataset_collate_fn = self.load_collate_fn(dataset, training)
 
         # by default, epoch_count = step_count = 0
         self.epoch_count = self.step_count = 0

@@ -1,5 +1,6 @@
 import argparse
 import sys
+import os
 
 from functions.predictor import Predictor
 from options import update_options, options, reset_options
@@ -18,7 +19,8 @@ def parse_args():
     parser.add_argument('--batch-size', help='batch size', type=int)
     parser.add_argument('--checkpoint', help='trained model file', type=str, required=True)
     parser.add_argument('--name', required=True, type=str)
-    parser.add_argument('--folder', required=True, type=str)
+    parser.add_argument('--folder', required=False, type=str)
+    parser.add_argument('--data_dir', required=True, type=str)
 
     options.dataset.name += '_demo'
 
@@ -28,6 +30,7 @@ def parse_args():
 
 
 def main():
+    #os.environ['CUDA_LAUNCH_BLOCKING'] = '2'
     args = parse_args()
     logger, writer = reset_options(options, args, phase='predict')
 

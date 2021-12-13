@@ -2,6 +2,7 @@ import os
 import pprint
 from argparse import ArgumentParser
 from datetime import datetime
+import pickle
 
 import numpy as np
 import yaml
@@ -17,6 +18,7 @@ options.version = None
 options.num_workers = 1
 options.num_gpus = 1
 options.pin_memory = True
+options.dropout = 0
 
 options.log_dir = "logs"
 options.log_level = "info"
@@ -58,14 +60,14 @@ options.model.align_with_tensorflow = False
 
 options.loss = edict()
 options.loss.weights = edict()
-options.loss.weights.normal = 1.6e-4
-options.loss.weights.edge = 0.3
-options.loss.weights.laplace = 0.5
+options.loss.weights.normal = 10#1.6e-4
+options.loss.weights.edge = 0.2
+options.loss.weights.laplace = 0.1
 options.loss.weights.move = 0.1
 options.loss.weights.constant = 1.
 options.loss.weights.chamfer = [1., 1., 1.]
 options.loss.weights.chamfer_opposite = 1.
-options.loss.weights.reconst = 0.
+options.loss.weights.reconst = 0.1
 
 options.train = edict()
 options.train.num_epochs = 50
@@ -87,10 +89,11 @@ options.optim = edict()
 options.optim.name = "adam"
 options.optim.adam_beta1 = 0.9
 options.optim.sgd_momentum = 0.9
-options.optim.lr = 5.0E-5
+options.optim.lr = 1.0E-5
 options.optim.wd = 1.0E-6
 options.optim.lr_step = [30, 45]
 options.optim.lr_factor = 0.1
+
 
 
 def _update_dict(full_key, val, d):
@@ -152,6 +155,8 @@ def reset_options(options, args, phase='train'):
         options.train.batch_size = options.test.batch_size = args.batch_size
     if hasattr(args, "version") and args.version:
         options.version = args.version
+    if hasattr(args, "data_dir") and args.data_dir:
+        options.dataset.data_dir = args.data_dir
     if hasattr(args, "num_epochs") and args.num_epochs:
         options.train.num_epochs = args.num_epochs
     if hasattr(args, "checkpoint") and args.checkpoint:
@@ -188,6 +193,12 @@ def reset_options(options, args, phase='train'):
 
     print('=> creating summary writer')
     writer = SummaryWriter(options.summary_dir)
+
+    pkl = pickle.load(open('iccv_p2mpp.dat', 'rb'))
+    options.model.sample_adj = pkl['sample_cheb_dense']
+    options.model.sample_coord = pkl['sample_coord']
+
+
 
     return logger, writer
 

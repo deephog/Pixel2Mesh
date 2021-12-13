@@ -1,8 +1,9 @@
 import argparse
 import sys
-
+import os
 from functions.trainer import Trainer
 from options import update_options, options, reset_options
+#os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 
 
 def parse_args():
@@ -21,6 +22,7 @@ def parse_args():
     parser.add_argument('--num-epochs', help='number of epochs', type=int)
     parser.add_argument('--version', help='version of task (timestamp by default)', type=str)
     parser.add_argument('--name', required=True, type=str)
+    parser.add_argument('--data_dir', required=True, type=str)
 
     args = parser.parse_args()
 
@@ -28,6 +30,7 @@ def parse_args():
 
 
 def main():
+
     args = parse_args()
     logger, writer = reset_options(options, args)
 
