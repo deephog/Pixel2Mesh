@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from models.layers.chamfer_wrapper import ChamferDist
-from pytorch3d.structures import Meshes
-from pytorch3d.loss import chamfer_distance, mesh_normal_consistency, mesh_edge_loss, mesh_laplacian_smoothing
-from pytorch3d.ops import estimate_pointcloud_normals
+#from pytorch3d.structures import Meshes
+#from pytorch3d.loss import chamfer_distance, mesh_normal_consistency, mesh_edge_loss, mesh_laplacian_smoothing
+#from pytorch3d.ops import estimate_pointcloud_normals
 
 
 class P2MLoss(nn.Module):

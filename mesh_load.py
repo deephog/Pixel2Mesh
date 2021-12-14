@@ -7,8 +7,8 @@ import numpy as np
 import open3d as o3d
 import time
 from sknetwork.utils import edgelist2adjacency
-from pytorch3d.structures import Meshes
-from pytorch3d.loss import chamfer_distance, mesh_normal_consistency, mesh_edge_loss, mesh_laplacian_smoothing
+#from pytorch3d.structures import Meshes
+#from pytorch3d.loss import chamfer_distance, mesh_normal_consistency, mesh_edge_loss, mesh_laplacian_smoothing
 
 # def load_mesh(file, sample_size=None):
 #     f = trimesh.load(file)
